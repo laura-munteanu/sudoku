@@ -1,15 +1,4 @@
-<mat-card class="container" fxLayout="column">
-  <mat-card-title fxLayoutAlign="space-evenly">
-    <h1><strong>SUDOKU</strong></h1>
-  </mat-card-title>
-  <mat-card-header fxLayout="row" fxLayoutAlign="space-evenly center">
-    <button mat-raised-button color="accent" (click)="start_game(game)">START</button>
-    <button mat-raised-button color="warn">PAUSE</button>
-    <button mat-raised-button color="primary">RESUME</button>
-    <button mat-raised-button color="basic">STOP</button>
-  </mat-card-header>
-
-</mat-card>
+<app-header [gameState]="gameState" (gameStatusChanged)="changeGameStatus($event)"></app-header>
 
 <div class="board" fxLayout="row wrap">
   <mat-grid-list class="square" cols="3" *ngFor="let numberBlock of numberOfBlocks">

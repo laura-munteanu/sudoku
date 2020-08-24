@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GameState } from './models';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ export class AppComponent implements OnInit {
   public numberOfBlocks: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8];
   public game: any[][] = [];
   public displayGame: any[][] = [];
+  public gameState: GameState;
 
 
   ngOnInit() {
@@ -42,6 +44,7 @@ export class AppComponent implements OnInit {
     // ]
     this.createGameByLevel();
     this.setDisplayGame();
+    this.gameState = GameState.InProgress;
   }
 
   private createGameByLevel() {
@@ -77,6 +80,10 @@ export class AppComponent implements OnInit {
   }
 
 
+  public changeGameStatus(newState: GameState){
+    this.gameState = newState;
+  }
+  
   // get_row(board, row) {
   //   // Given a board, we can return a single row
   //   return board[row]
@@ -103,9 +110,6 @@ export class AppComponent implements OnInit {
   //   return cells
   // }
   // s = this.get_square(this.game);
-
-
-
 
 
 
