@@ -15,7 +15,23 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
-    this.generate();
+    this.initEmptyGame();
+  }
+
+  private initEmptyGame() {
+    this.game = [
+      [, , , , , , , ,],
+      [, , , , , , , ,],
+      [, , , , , , , ,],
+      [, , , , , , , ,],
+      [, , , , , , , ,],
+      [, , , , , , , ,],
+      [, , , , , , , ,],
+      [, , , , , , , ,],
+      [, , , , , , , ,],
+    ];
+    this.setDisplayGame();
+    this.gameState = GameState.NotStarted;
   }
 
   private generate() {
@@ -31,17 +47,7 @@ export class AppComponent implements OnInit {
       [8, 6, 3, 7, 4, 5, 2, 1, 9]
     ];
 
-    // this.game = [
-    //   [, , , , , , , ,],
-    //   [, , , , , , , ,],
-    //   [, , , , , , , ,],
-    //   [, , , , , , , ,],
-    //   [, , , , , , , ,],
-    //   [, , , , , , , ,],
-    //   [, , , , , , , ,],
-    //   [, , , , , , , ,],
-    //   [, , , , , , , ,],
-    // ]
+
     this.createGameByLevel();
     this.setDisplayGame();
     this.gameState = GameState.InProgress;
@@ -80,10 +86,24 @@ export class AppComponent implements OnInit {
   }
 
 
-  public changeGameStatus(newState: GameState){
-    this.gameState = newState;
+  public changeGameStatus(buttonName: string) {
+    switch (buttonName) {
+      case 'start':
+        this.generate();
+        this.gameState = GameState.InProgress;
+        break;
+      case 'pause':
+        this.gameState = GameState.Paused;
+        break;
+      case 'resume':
+        this.gameState = GameState.InProgress;
+        break;
+      case 'stop':
+        this.gameState = GameState.NotStarted;
+        break;
+    }
   }
-  
+
   // get_row(board, row) {
   //   // Given a board, we can return a single row
   //   return board[row]
