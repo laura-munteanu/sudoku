@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { GameState } from './models/game-state.enum';
+import { GameState } from '../../models/game-state.enum';
 
 @Component({
   selector: 'app-header',
@@ -22,7 +22,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.secondsElapsed = 0;
     this.setTimerDisplay();
-   // this.getTimerDisplayed();
   }
 
   public isButtonVisible(button: string) {
@@ -81,9 +80,7 @@ export class HeaderComponent implements OnInit {
     this.gameStatusChanged.emit(button);
   }
 
-  // public getTimerDisplayed() {
-
-  // }
+ 
 
   public startTimer() {
     this.timerId = +(setInterval(() => {

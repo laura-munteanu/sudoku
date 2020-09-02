@@ -11,6 +11,7 @@ export class AppComponent implements OnInit {
   public numberOfBlocks: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8];
   public game: any[][] = [];
   public displayGame: any[][] = [];
+  public originalDisplayGame: any[][] = [];
   public gameState: GameState;
 
 
@@ -54,7 +55,8 @@ export class AppComponent implements OnInit {
   }
 
   private createGameByLevel() {
-    let cells = [];
+    //let cells = [];
+
 
     for (let j = 0; j < 9; j++) {
       let i = Math.floor(Math.random() * 8);
@@ -68,10 +70,13 @@ export class AppComponent implements OnInit {
       this.game[j][i] = '';
       this.game[j][j] = '';
     }
+
   }
+
 
   private setDisplayGame() {
     this.displayGame = [];
+    this.originalDisplayGame = [];
     for (let i = 0; i < 9; i++) {
       const indexLine = Math.floor(i / 3) * 3;
       const indexColumn = (i % 3) * 3;
@@ -82,6 +87,7 @@ export class AppComponent implements OnInit {
         }
       }
       this.displayGame.push(block);
+      this.originalDisplayGame.push(block.slice());
     }
   }
 
@@ -103,6 +109,15 @@ export class AppComponent implements OnInit {
         break;
     }
   }
+
+
+  public updateGameValues(event, numberBlock, numberCell) {
+    this.displayGame[numberBlock][numberCell] = +event.target.value;
+    console.log(this.displayGame);
+    console.log(this.originalDisplayGame);
+   
+  }
+
 
   // get_row(board, row) {
   //   // Given a board, we can return a single row

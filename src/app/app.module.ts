@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './shared/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { HeaderComponent } from './header.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
