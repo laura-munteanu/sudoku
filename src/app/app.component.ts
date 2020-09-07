@@ -55,9 +55,6 @@ export class AppComponent implements OnInit {
   }
 
   private createGameByLevel() {
-    //let cells = [];
-
-
     for (let j = 0; j < 9; j++) {
       let i = Math.floor(Math.random() * 8);
       this.game[j][i] = '';
@@ -83,12 +80,14 @@ export class AppComponent implements OnInit {
       const block = [];
       for (let r = indexLine; r < indexLine + 3; r++) {
         for (let c = indexColumn; c < indexColumn + 3; c++) {
-          block.push(this.game[r][c]);
+          block.push(this.game[r][c] ? this.game[r][c] : '');
         }
       }
       this.displayGame.push(block);
       this.originalDisplayGame.push(block.slice());
     }
+    console.log('current game', this.displayGame);
+    console.log('original game', this.originalDisplayGame);
   }
 
 
@@ -113,9 +112,17 @@ export class AppComponent implements OnInit {
 
   public updateGameValues(event, numberBlock, numberCell) {
     this.displayGame[numberBlock][numberCell] = +event.target.value;
-    console.log(this.displayGame);
-    console.log(this.originalDisplayGame);
-   
+    console.log('current game', this.displayGame);
+    console.log('original game', this.originalDisplayGame);
+
+  }
+
+  public numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keycode;
+    if (charCode < 49 || charCode > 57) {
+      return false;
+    }
+    return true;
   }
 
 
