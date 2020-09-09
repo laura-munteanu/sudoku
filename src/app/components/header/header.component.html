@@ -1,19 +1,19 @@
 <mat-card class="header" fxLayout="column">
-    <mat-card-title fxLayoutAlign="space-evenly center" >
+    <div fxLayoutAlign="space-evenly center">
       <h1 style="line-height:38px; margin: 0px;"><strong style="text-align: center;">SUDOKU</strong></h1>
       <div style="line-height:38px;">
-        <button mat-stroked-button color="basic">
+        <button mat-fab color="accent">
           <div>{{timerDisplay}}</div>
         </button>
         <!-- <mat-icon>timer</mat-icon> -->
       </div>
-    </mat-card-title>
-    <mat-card-header fxLayout="row" fxLayoutAlign="space-evenly center">
+    </div>
+    <div style="padding: 5px;" fxLayoutAlign="space-evenly center">
       <button mat-raised-button color="accent" [disabled]="isButtonDisabled('start')"  (click)="btnClick('start')">START</button>
       <button mat-raised-button color="warn" [disabled]="isButtonDisabled('pause')" *ngIf="isButtonVisible('pause')" (click)="btnClick('pause')">PAUSE</button>
       <button mat-raised-button color="primary" [disabled]="isButtonDisabled('resume')" *ngIf="isButtonVisible('resume')" (click)="btnClick('resume')">RESUME</button>
       <button mat-raised-button color="basic" [disabled]="isButtonDisabled('stop')" (click)="btnClick('stop')">STOP</button>
-    </mat-card-header>
+    </div>
   
   </mat-card>
 
