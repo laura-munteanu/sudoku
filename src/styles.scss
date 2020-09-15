@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+// html, body { height: 100%; }
 body { 
-    margin: 0px;
+    margin: 5px auto 0px;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     background-image: url(images/pattern.png); }
 .header {
@@ -18,19 +18,29 @@ body {
     height: 490px;
     padding: 0px;
     background-color: teal;
-    
 }
 .square {
     width: 150px;
     height: 150px; 
-    border: 4px;
     border-color: aquamarine;
     padding-bottom: 5px!important;
     margin: 5px;
 }
 
+.paused {
+    color: #ffffff;
+    div {
+        text-align: center;
+        margin-top: 230px;
+        font-size: 20px;
+        font-weight: bold;
+        font-style: italic;
+        letter-spacing: 1px;
+    }
+}
+
 .cell {
-    background-color:white;
+    background-color:cadetblue;
     border: 2px;
     border-color: midnightblue;
     
@@ -45,4 +55,19 @@ body {
     padding: 0px;
     margin: auto;
     text-align: center;
+}
+
+.cell-selected {
+    background-color: red;
+
+    input {
+        background-color: red;
+    }
+}
+
+.cell-highlighted {
+    background-color: green;
+    input {
+        background-color: green;
+    }
 }
