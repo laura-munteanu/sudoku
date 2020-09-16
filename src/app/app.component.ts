@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   public gameState: GameState;
   public gamePaused: boolean;
   public blockCellState: string;
-    
+
 
   ngOnInit() {
     this.initEmptyGame();
@@ -41,17 +41,7 @@ export class AppComponent implements OnInit {
     this.gameState = GameState.NotStarted;
 
 
-     this.gameCellState =  [
-    ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-    ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-    ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-    ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-    ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-    ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-    ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-    ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-    ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-  ];
+
   }
 
   private generate() {
@@ -91,6 +81,7 @@ export class AppComponent implements OnInit {
   private setDisplayGame() {
     this.displayGame = [];
     this.originalDisplayGame = [];
+    this.gameCellState = [];
     for (let i = 0; i < 9; i++) {
       const indexLine = Math.floor(i / 3) * 3;
       const indexColumn = (i % 3) * 3;
@@ -99,27 +90,16 @@ export class AppComponent implements OnInit {
       for (let r = indexLine; r < indexLine + 3; r++) {
         for (let c = indexColumn; c < indexColumn + 3; c++) {
           block.push(this.game[r][c] ? this.game[r][c] : '');
-          //const index = Math.floor(Math.random() * 3);
-          // switch (index) {
-          //   case 0:
-          //     blockCellState.push('normal');
-          //     break;
-          //   case 1:
-          //     blockCellState.push('highlighted');
-          //     break;
-          //   case 2:
-          //     blockCellState.push('selected');
-          //     break;
-          // }
-         // blockCellState.push('normal');
+          blockCellState.push('normal');
         }
       }
       this.displayGame.push(block);
       this.originalDisplayGame.push(block.slice());
-      //this.gameCellState.push(blockCellState);
+      this.gameCellState.push(blockCellState);
     }
     console.log('current game', this.displayGame);
     console.log('original game', this.originalDisplayGame);
+    console.log('game state:', this.gameCellState);
   }
 
 
@@ -156,15 +136,54 @@ export class AppComponent implements OnInit {
 
 
   public selectCell(numberBlock, numberCell) {
-    for (let i = 0; i < 9; i++){
-      this.gameCellState[numberBlock][i]='highlighted';
+    //reset the state of the entire martrix
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        this.gameCellState[i][j] = 'normal';
+      }
     }
-    this.gameCellState[numberBlock][numberCell]='selected';
+
+    if (this.originalDisplayGame[numberBlock][numberCell]) {
+      return;
+    }
+
+    //mark clicked cell as selected
+    this.gameCellState[numberBlock][numberCell] = 'selected';
+
+    //mark block as highlighted
+    for (let i = 0; i < 9; i++) {
+      if (i != numberCell)
+        this.gameCellState[numberBlock][i] = 'highlighted';
+    }
+
+    //mark line as highlighted
+    let x = 6;
+    if (numberBlock >= 0 && numberBlock <= 2) {
+      x = 0;
+    }
+    else if (numberBlock >= 3 && numberBlock <= 5) {
+      x = 3;
+    }
+
+    let y = 6;
+    if (numberCell >= 0 && numberCell <= 2) {
+      y = 0;
+    }
+    else if (numberCell >= 3 && numberCell <= 5) {
+      y = 3;
+    }
+
+    for (let i = x; i < x + 3; i++) {
+      for (let j = y; j < y + 3; j++) {
+        if (i != numberBlock || j != numberCell) {
+          this.gameCellState[i][j] = 'highlighted';
+        }
+      }
+    }
+
     console.log(numberBlock, numberCell);
     console.log('selected cell:', this.gameCellState);
- 
-    this.gameCellState[3][numberCell]='highlighted'
-    console.log('column',this.gameCellState[3][numberCell]);
+
 
 
   }
