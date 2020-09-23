@@ -58,16 +58,24 @@ body {
 }
 
 .cell-selected {
-    background-color: red;
+    background-color: rgb(50, 205, 197);
 
     input {
-        background-color: red;
+        background-color:rgb(50, 205, 197);
     }
 }
 
 .cell-highlighted {
-    background-color: green;
+    background-color:rgb(219, 224, 223);
     input {
-        background-color: green;
+        background-color:  rgb(219, 224, 223);
     }
 }
+
+.cell-error {
+    background-color:red;
+    input {
+        background-color:  red;
+    }
+}
+

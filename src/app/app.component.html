@@ -2,7 +2,8 @@
 
 <div class="board" fxLayout="row wrap" fxLayoutAlign="center" *ngIf="!gamePaused">
   <mat-grid-list class="square" cols="3" *ngFor="let numberBlock of numberOfBlocks">
-    <mat-grid-tile class="cell" [ngClass]="{'cell-highlighted': gameCellState[numberBlock][numberCell] == 'highlighted', 'cell-selected': gameCellState[numberBlock][numberCell] == 'selected'}" *ngFor="let numberCell of numberOfBlocks" (click)="selectCell(numberBlock, numberCell)">
+    <mat-grid-tile class="cell" [ngClass]="{'cell-highlighted': gameCellState[numberBlock][numberCell] == 'highlighted', 'cell-selected': gameCellState[numberBlock][numberCell] == 'selected', 'cell-error': gameCellState[numberBlock][numberCell] == 'error'}" 
+        *ngFor="let numberCell of numberOfBlocks" (click)="selectCell(numberBlock, numberCell)">
       <div *ngIf="originalDisplayGame[numberBlock][numberCell]">{{displayGame[numberBlock][numberCell]}}</div>
       <input class="input-text" type="text" maxlength="1" *ngIf="!originalDisplayGame[numberBlock][numberCell]"
         [value]="displayGame[numberBlock][numberCell]" (change)="updateGameValues($event, numberBlock, numberCell)"

@@ -126,12 +126,44 @@ export class AppComponent implements OnInit {
   }
 
 
-
   public updateGameValues(event, numberBlock, numberCell) {
-    this.displayGame[numberBlock][numberCell] = +event.target.value;
+    this.displayGame[numberBlock][numberCell] = event.target.value ? +event.target.value : '';
+    let checkedValues = [];
+    //check block 
+    for (let i = 0; i < 9; i++) {
+      if (i != numberCell) {
+        checkedValues.push(this.displayGame[numberBlock][i]);
+      }
+    }
+    let result = this.hasDuplicates(checkedValues, this.displayGame[numberBlock][numberCell]);
+    if (result) {
+      this.gameCellState[numberBlock][numberCell] = 'error';
+      return;
+    }
+
+    //check line: golesc array
+    //checkedValues = []
+
+    //check column
+
+
+
+    // duplicates not found for any of the cases 
+    this.gameCellState[numberBlock][numberCell] = 'normal';
+
+
     console.log('current game', this.displayGame);
     console.log('original game', this.originalDisplayGame);
+  }
 
+
+  private hasDuplicates(values: any[], currentValue): boolean {
+    for (let i = 0; i < values.length; i++) {
+      if (values[i] == currentValue) {
+        return true;
+      }
+    }
+    return false;
   }
 
 
@@ -139,7 +171,9 @@ export class AppComponent implements OnInit {
     //reset the state of the entire martrix
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
-        this.gameCellState[i][j] = 'normal';
+        if (this.gameCellState[i][j] != 'error') {
+          this.gameCellState[i][j] = 'normal';
+        }
       }
     }
 
@@ -148,12 +182,15 @@ export class AppComponent implements OnInit {
     }
 
     //mark clicked cell as selected
-    this.gameCellState[numberBlock][numberCell] = 'selected';
+    if (this.gameCellState[numberBlock][numberCell] != 'error') {
+      this.gameCellState[numberBlock][numberCell] = 'selected';
+    }
 
     //mark block as highlighted
     for (let i = 0; i < 9; i++) {
-      if (i != numberCell)
+      if (i != numberCell && this.gameCellState[numberBlock][i] != 'error') {
         this.gameCellState[numberBlock][i] = 'highlighted';
+      }
     }
 
     //mark line as highlighted
@@ -175,17 +212,38 @@ export class AppComponent implements OnInit {
 
     for (let i = x; i < x + 3; i++) {
       for (let j = y; j < y + 3; j++) {
-        if (i != numberBlock || j != numberCell) {
+        if ((i != numberBlock || j != numberCell)  && this.gameCellState[i][j] != 'error') {
           this.gameCellState[i][j] = 'highlighted';
         }
       }
     }
 
-    console.log(numberBlock, numberCell);
-    console.log('selected cell:', this.gameCellState);
+    //mark column as highlighted
+    let c = 2
+    if (numberBlock % 3 == 0) {
+      c = 0;
+    }
+    else if (numberBlock % 3 == 1) {
+      c = 1;
+    }
 
+    let d = 2;
+    if (numberCell % 3 == 0) {
+      d = 0;
+    }
+    else if (numberCell % 3 == 1) {
+      d = 1;
+    }
 
+    console.log(numberBlock, c, numberCell, d);
 
+    for (let i = c; i < 9; i = i + 3) {
+      for (let j = d; j < 9; j = j + 3) {
+        if ((i != numberBlock || j != numberCell)  && this.gameCellState[i][j] != 'error') {
+          this.gameCellState[i][j] = 'highlighted';
+        }
+      }
+    }
   }
 
   public numberOnly(event): boolean {
