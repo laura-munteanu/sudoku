@@ -99,7 +99,7 @@ export class AppComponent implements OnInit {
     }
     console.log('current game', this.displayGame);
     console.log('original game', this.originalDisplayGame);
-    console.log('game state:', this.gameCellState);
+  //  console.log('game state:', this.gameCellState);
   }
 
 
@@ -121,14 +121,14 @@ export class AppComponent implements OnInit {
         this.gameState = GameState.NotStarted;
         break;
     }
-
-    console.log(this.gamePaused)
+    //console.log(this.gamePaused)
   }
 
 
   public updateGameValues(event, numberBlock, numberCell) {
     this.displayGame[numberBlock][numberCell] = event.target.value ? +event.target.value : '';
     let checkedValues = [];
+
     //check block 
     for (let i = 0; i < 9; i++) {
       if (i != numberCell) {
@@ -142,10 +142,67 @@ export class AppComponent implements OnInit {
     }
 
     //check line: golesc array
-    //checkedValues = []
+    checkedValues = [];
+    let x = 6;
+    if (numberBlock >= 0 && numberBlock <= 2) {
+      x = 0;
+    }
+    else if (numberBlock >= 3 && numberBlock <= 5) {
+      x = 3;
+    }
+
+    let y = 6;
+    if (numberCell >= 0 && numberCell <= 2) {
+      y = 0;
+    }
+    else if (numberCell >= 3 && numberCell <= 5) {
+      y = 3;
+    }
+
+    for (let i = x; i < x + 3; i++) {
+      for (let j = y; j < y + 3; j++) {
+        if (i != numberBlock || j != numberCell) {
+          checkedValues.push(this.displayGame[i][j]);
+        }
+      }
+    }
+    result = this.hasDuplicates(checkedValues, this.displayGame[numberBlock][numberCell]);
+    if (result) {
+      this.gameCellState[numberBlock][numberCell] = 'error';
+      return;
+    }
+
 
     //check column
+    checkedValues = [];
+    let c = 2
+    if (numberBlock % 3 == 0) {
+      c = 0;
+    }
+    else if (numberBlock % 3 == 1) {
+      c = 1;
+    }
 
+    let d = 2;
+    if (numberCell % 3 == 0) {
+      d = 0;
+    }
+    else if (numberCell % 3 == 1) {
+      d = 1;
+    }
+
+    for (let i = c; i < 9; i = i + 3) {
+      for (let j = d; j < 9; j = j + 3) {
+        if (i != numberBlock || j != numberCell) {
+          checkedValues.push(this.displayGame[i][j]);
+        }
+      }
+    }
+    result = this.hasDuplicates(checkedValues, this.displayGame[numberBlock][numberCell]);
+    if (result) {
+      this.gameCellState[numberBlock][numberCell] = 'error';
+      return;
+    }
 
 
     // duplicates not found for any of the cases 
@@ -212,7 +269,7 @@ export class AppComponent implements OnInit {
 
     for (let i = x; i < x + 3; i++) {
       for (let j = y; j < y + 3; j++) {
-        if ((i != numberBlock || j != numberCell)  && this.gameCellState[i][j] != 'error') {
+        if ((i != numberBlock || j != numberCell) && this.gameCellState[i][j] != 'error') {
           this.gameCellState[i][j] = 'highlighted';
         }
       }
@@ -234,12 +291,10 @@ export class AppComponent implements OnInit {
     else if (numberCell % 3 == 1) {
       d = 1;
     }
-
-    console.log(numberBlock, c, numberCell, d);
-
+   
     for (let i = c; i < 9; i = i + 3) {
       for (let j = d; j < 9; j = j + 3) {
-        if ((i != numberBlock || j != numberCell)  && this.gameCellState[i][j] != 'error') {
+        if ((i != numberBlock || j != numberCell) && this.gameCellState[i][j] != 'error') {
           this.gameCellState[i][j] = 'highlighted';
         }
       }
