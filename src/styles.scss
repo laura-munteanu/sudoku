@@ -43,6 +43,7 @@ body {
     background-color:cadetblue;
     border: 2px;
     border-color: midnightblue;
+    font-weight: bold;
     
 }
 .mat-raised-button {
@@ -73,9 +74,13 @@ body {
 }
 
 .cell-error {
-    background-color:red;
+    //background-color:red;
+    color : red;
+    font-weight: bold;
     input {
-        background-color:  red;
+        //background-color:  red;
+        color : red;
+        font-weight: bold;
     }
 }
 

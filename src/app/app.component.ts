@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   public gameState: GameState;
   public gamePaused: boolean;
   public blockCellState: string;
+  public gameOver: boolean;
 
 
   ngOnInit() {
@@ -39,9 +40,6 @@ export class AppComponent implements OnInit {
     ];
     this.setDisplayGame();
     this.gameState = GameState.NotStarted;
-
-
-
   }
 
   private generate() {
@@ -77,7 +75,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-
   private setDisplayGame() {
     this.displayGame = [];
     this.originalDisplayGame = [];
@@ -99,7 +96,6 @@ export class AppComponent implements OnInit {
     }
     console.log('current game', this.displayGame);
     console.log('original game', this.originalDisplayGame);
-  //  console.log('game state:', this.gameCellState);
   }
 
 
@@ -121,7 +117,6 @@ export class AppComponent implements OnInit {
         this.gameState = GameState.NotStarted;
         break;
     }
-    //console.log(this.gamePaused)
   }
 
 
@@ -204,20 +199,30 @@ export class AppComponent implements OnInit {
       return;
     }
 
-
     // duplicates not found for any of the cases 
     this.gameCellState[numberBlock][numberCell] = 'normal';
 
-
-    console.log('current game', this.displayGame);
-    console.log('original game', this.originalDisplayGame);
+    this.gameOver = this.checkGameOver(this.displayGame, this.gameCellState);
+    if (this.gameOver == false) {
+      window.alert('game is over');
+    }
   }
-
 
   private hasDuplicates(values: any[], currentValue): boolean {
     for (let i = 0; i < values.length; i++) {
-      if (values[i] == currentValue) {
+      if ((values[i] == currentValue) && currentValue != '') {
         return true;
+      }
+    }
+    return false;
+  }
+
+  private checkGameOver(game: any[][], gameCellState): boolean {
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (game[i][j] == '' || gameCellState[i][j] == 'error') {
+          return true;
+        }
       }
     }
     return false;
@@ -291,7 +296,7 @@ export class AppComponent implements OnInit {
     else if (numberCell % 3 == 1) {
       d = 1;
     }
-   
+
     for (let i = c; i < 9; i = i + 3) {
       for (let j = d; j < 9; j = j + 3) {
         if ((i != numberBlock || j != numberCell) && this.gameCellState[i][j] != 'error') {
@@ -308,64 +313,4 @@ export class AppComponent implements OnInit {
     }
     return true;
   }
-
-
-
-
-  // this.gameCellState =  [
-  //   ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-  //   ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-  //   ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-  //   ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-  //   ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-  //   ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-  //   ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-  //   ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-  //   ['normal','normal' ,'normal' ,'normal' , 'normal', 'normal','normal' , 'normal','normal'],
-  // ];
-
-  // get_square(board, row) {
-  //   // Given a board, we can return a single row
-  //   return board[row]
-  // }
-
-  // a = this.get_row(this.game, 0);
-
-  // get_column(board, column) {
-  //   var col = []
-  //   for (let row = 0; row < 9; row++) {
-  //     col.push(board[row][column]);
-  //   }
-  //   return col
-  // }
-
-  // get_square(board) {
-  //   let cells = []
-  //   for (let r = 0; r < 9; r++) {
-  //     for (let c = 0; c < 9; c++) {
-  //       cells.push(board[r][c])
-  //     }
-  //   }
-  //   return cells
-  // }
-  // s = this.get_square(this.displayGame);
-
-  //generate easy game
-  /*start_game(board) {
-    board = [
-      [9, 8, 7, 6, 5, 4, 3, 2, 1],
-      [2, 4, 6, 1, 7, 3, 9, 8, 5],
-      [3, 5, 1, 9, 2, 8, 7, 4, 6],
-      [1, 2, 8, 5, 3, 7, 6, 9, 4],
-      [6, 3, 4, 8, 9, 2, 1, 5, 7],
-      [7, 9, 5, 4, 6, 1, 8, 3, 2],
-      [5, 1, 9, 2, 8, 6, 4, 7, 3],
-      [4, 7, 2, 3, 1, 9, 5, 6, 8],
-      [8, 6, 3, 7, 4, 5, 2, 1, 9]
-    ]
-    this.game = board
-    let cells = [];
-    return board
-  }
-  */
 }
