@@ -1,23 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 
-// html, body { height: 100%; }
+
+$background-color: #2f77ad;
+$background-highlighted: #dbe0df;
+$background-selected: #2bb1d6;
+$background-cell: #81bae6;
+$error-color: #ff0000;
+
+
 body { 
     margin: 5px auto 0px;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     background-image: url(images/pattern.png); }
+
 .header {
     margin: 0px auto;
+    border-radius: 5px;
     width: 490px;
     height: 120px;
     padding: 0px;
-    background-color: teal;
+    background-color: $background-color;
 }
 .board {
     margin: 5px auto 0px;
+    border-radius: 5px;
     width: 490px;
     height: 490px;
     padding: 0px;
-    background-color: teal;
+    // background-color: teal;
+    background-color: $background-color;
+
 }
 .square {
     width: 150px;
@@ -25,6 +37,7 @@ body {
     border-color: aquamarine;
     padding-bottom: 5px!important;
     margin: 5px;
+    border-radius: 5px;
 }
 
 .paused {
@@ -40,46 +53,47 @@ body {
 }
 
 .cell {
-    background-color:cadetblue;
+    // background-color:cadetblue;
+    background-color: $background-cell;
     border: 2px;
     border-color: midnightblue;
     font-weight: bold;
-    
+    border-radius: 3px;
 }
+
 .mat-raised-button {
     height: 36px;
     width: 100px;
 }
+
 .input-text {
     width: 35px;
     height: 35px;
     padding: 0px;
     margin: auto;
     text-align: center;
+    border-radius: 5px;
 }
 
 .cell-selected {
-    background-color: rgb(50, 205, 197);
-
+    // background-color: rgb(50, 205, 197);
     input {
-        background-color:rgb(50, 205, 197);
+        background-color: $background-selected;
     }
 }
 
 .cell-highlighted {
-    background-color:rgb(219, 224, 223);
+    background-color: $background-highlighted;
     input {
-        background-color:  rgb(219, 224, 223);
+        background-color: $background-highlighted;
     }
 }
 
 .cell-error {
-    //background-color:red;
-    color : red;
+    color : $error-color;
     font-weight: bold;
     input {
-        //background-color:  red;
-        color : red;
+        color :$error-color;
         font-weight: bold;
     }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+// import { readFile } from 'fs';
 import { GameState } from './models';
 import { MaterialModule } from './shared/material.module';
 
@@ -21,11 +22,18 @@ export class AppComponent implements OnInit {
   public blockCellState: string;
   public gameOver: boolean;
 
+//   public txt = readFile('1.txt','utf-8', (err, data) => { 
+//     if (err) throw err; 
+  
+//     // Converting Raw Buffer to text 
+//     // data using tostring function. 
+//     console.log(data); 
+// }) 
+
 
   ngOnInit() {
     this.initEmptyGame();
   }
-
   private initEmptyGame() {
     this.game = [
       [, , , , , , , ,],
@@ -313,4 +321,6 @@ export class AppComponent implements OnInit {
     }
     return true;
   }
+
+
 }
